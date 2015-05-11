@@ -1,6 +1,14 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# create a folder for sharing called “landline-basestation”
+system("
+    if [ #{ARGV[0]} = 'up' ]; then
+        echo 'You are doing vagrant up and can execute your script'
+        mkdir ./landline-basestation
+    fi
+")
+
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
