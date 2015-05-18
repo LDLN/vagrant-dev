@@ -39,6 +39,7 @@ export GOPATH=/home/vagrant/go
 /usr/local/go/bin/go get github.com/nu7hatch/gouuid
 /usr/local/go/bin/go get labix.org/v2/mgo
 /usr/local/go/bin/go get code.google.com/p/go.net/websocket
+/usr/local/go/bin/go get github.com/tarm/serial
 
 # DEPLOY LDLN FOR PRODUCTION
 #/usr/local/go/bin/go get github.com/ldln/landline-basestation
