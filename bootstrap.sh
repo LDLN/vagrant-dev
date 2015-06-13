@@ -71,6 +71,7 @@ chown -R vagrant /home/vagrant/landline-basestation
     echo "export GOPATH=/home/vagrant/go" >> /etc/init.d/ldln_dev_startup.sh
     echo "/home/vagrant/go/bin/revel run github.com/ldln/landline-basestation &" >> /etc/init.d/ldln_dev_startup.sh
     echo "/usr/local/go/bin/go run /home/vagrant/go/src/github.com/ldln/landline-basestation/ws/main.go &" >> /etc/init.d/ldln_dev_startup.sh
+    echo "/usr/local/go/bin/go run /home/vagrant/go/src/github.com/ldln/landline-basestation/serial/main.go &" >> /etc/init.d/ldln_dev_startup.sh
 
     # start tilestream
     #/usr/bin/node /home/ubuntu/tilestream/index.js start --host 184.73.255.76 --tiles=/home/ubuntu/tilestream/tiles &
