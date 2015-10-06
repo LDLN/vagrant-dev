@@ -40,44 +40,45 @@ export GOPATH=/home/vagrant/go
 /usr/local/go/bin/go get labix.org/v2/mgo
 /usr/local/go/bin/go get code.google.com/p/go.net/websocket
 /usr/local/go/bin/go get github.com/tarm/serial
+/usr/local/go/bin/go get github.com/gorilla/websocket
 
 # DEPLOY LDLN FOR PRODUCTION
 #/usr/local/go/bin/go get github.com/ldln/landline-basestation
 
 # DEPLOY LDLN FOR DEVELOPMENT
-git clone https://github.com/LDLN/landline-basestation.git /home/vagrant/landline-basestation
-mkdir -p $GOPATH/src/github.com/ldln/
-ln -s /home/vagrant/landline-basestation/ $GOPATH/src/github.com/ldln/landline-basestation
+# git clone https://github.com/LDLN/landline-basestation.git /home/vagrant/landline-basestation
+# mkdir -p $GOPATH/src/github.com/ldln/
+# ln -s /home/vagrant/landline-basestation/ $GOPATH/src/github.com/ldln/landline-basestation
 
-mkdir $GOPATH/src/github.com/ldln/landline-basestation/app/tmp
-chown -R vagrant $GOPATH/*
-chown -R vagrant /home/vagrant/landline-basestation
+# mkdir $GOPATH/src/github.com/ldln/landline-basestation/app/tmp
+# chown -R vagrant $GOPATH/*
+# chown -R vagrant /home/vagrant/landline-basestation
 
-#if [ ! -f "/etc/init.d/ldln_dev_startup.sh" ]; then
+# #if [ ! -f "/etc/init.d/ldln_dev_startup.sh" ]; then
 
-    echo "#!/bin/sh" >> /etc/init.d/ldln_dev_startup.sh
-    echo "### BEGIN INIT INFO" >> /etc/init.d/ldln_dev_startup.sh
-    echo "# Provides:          god" >> /etc/init.d/ldln_dev_startup.sh
-    echo "# Required-Start:    \$remote_fs $syslog" >> /etc/init.d/ldln_dev_startup.sh
-    echo "# Required-Stop:     \$remote_fs $syslog " >> /etc/init.d/ldln_dev_startup.sh
-    echo "# Default-Start:     2 3 4 5" >> /etc/init.d/ldln_dev_startup.sh
-    echo "# Default-Stop:      0 1 6" >> /etc/init.d/ldln_dev_startup.sh
-    echo "# Short-Description: start god process monitoring" >> /etc/init.d/ldln_dev_startup.sh
-    echo "# Description:       Start god process monitoring" >> /etc/init.d/ldln_dev_startup.sh
-    echo "### END INIT INFO" >> /etc/init.d/ldln_dev_startup.sh
+#     echo "#!/bin/sh" >> /etc/init.d/ldln_dev_startup.sh
+#     echo "### BEGIN INIT INFO" >> /etc/init.d/ldln_dev_startup.sh
+#     echo "# Provides:          god" >> /etc/init.d/ldln_dev_startup.sh
+#     echo "# Required-Start:    \$remote_fs $syslog" >> /etc/init.d/ldln_dev_startup.sh
+#     echo "# Required-Stop:     \$remote_fs $syslog " >> /etc/init.d/ldln_dev_startup.sh
+#     echo "# Default-Start:     2 3 4 5" >> /etc/init.d/ldln_dev_startup.sh
+#     echo "# Default-Stop:      0 1 6" >> /etc/init.d/ldln_dev_startup.sh
+#     echo "# Short-Description: start god process monitoring" >> /etc/init.d/ldln_dev_startup.sh
+#     echo "# Description:       Start god process monitoring" >> /etc/init.d/ldln_dev_startup.sh
+#     echo "### END INIT INFO" >> /etc/init.d/ldln_dev_startup.sh
     
-    echo "/bin/fuser -k 9000/tcp" >> /etc/init.d/ldln_dev_startup.sh
-    echo "/bin/fuser -k 8080/tcp" >> /etc/init.d/ldln_dev_startup.sh
-    echo "export GOPATH=/home/vagrant/go" >> /etc/init.d/ldln_dev_startup.sh
-    echo "/home/vagrant/go/bin/revel run github.com/ldln/landline-basestation &" >> /etc/init.d/ldln_dev_startup.sh
-    echo "/usr/local/go/bin/go run /home/vagrant/go/src/github.com/ldln/landline-basestation/ws/main.go &" >> /etc/init.d/ldln_dev_startup.sh
-    echo "/usr/local/go/bin/go run /home/vagrant/go/src/github.com/ldln/landline-basestation/serial/main.go &" >> /etc/init.d/ldln_dev_startup.sh
+#     echo "/bin/fuser -k 9000/tcp" >> /etc/init.d/ldln_dev_startup.sh
+#     echo "/bin/fuser -k 8080/tcp" >> /etc/init.d/ldln_dev_startup.sh
+#     echo "export GOPATH=/home/vagrant/go" >> /etc/init.d/ldln_dev_startup.sh
+#     echo "/home/vagrant/go/bin/revel run github.com/ldln/landline-basestation &" >> /etc/init.d/ldln_dev_startup.sh
+#     echo "/usr/local/go/bin/go run /home/vagrant/go/src/github.com/ldln/landline-basestation/ws/main.go &" >> /etc/init.d/ldln_dev_startup.sh
+#     echo "/usr/local/go/bin/go run /home/vagrant/go/src/github.com/ldln/landline-basestation/serial/main.go &" >> /etc/init.d/ldln_dev_startup.sh
 
-    # start tilestream
-    #/usr/bin/node /home/ubuntu/tilestream/index.js start --host 184.73.255.76 --tiles=/home/ubuntu/tilestream/tiles &
+#     # start tilestream
+#     #/usr/bin/node /home/ubuntu/tilestream/index.js start --host 184.73.255.76 --tiles=/home/ubuntu/tilestream/tiles &
     
-    chmod +x /etc/init.d/ldln_dev_startup.sh
-    update-rc.d ldln_dev_startup.sh defaults
-#fi
+#     chmod +x /etc/init.d/ldln_dev_startup.sh
+#     update-rc.d ldln_dev_startup.sh defaults
+# #fi
 
-/etc/init.d/ldln_dev_startup.sh
+# /etc/init.d/ldln_dev_startup.sh
