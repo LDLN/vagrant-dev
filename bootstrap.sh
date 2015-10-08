@@ -47,8 +47,8 @@ export GOPATH=/home/vagrant/go
 
 # DEPLOY LDLN FOR DEVELOPMENT
 # git clone https://github.com/LDLN/landline-basestation.git /home/vagrant/landline-basestation
-# mkdir -p $GOPATH/src/github.com/ldln/
-# ln -s /home/vagrant/landline-basestation/ $GOPATH/src/github.com/ldln/landline-basestation
+mkdir -p $GOPATH/src/github.com/ldln/
+ln -s /home/vagrant/ldln-workspace/ $GOPATH/src/github.com/ldln
 
 # mkdir $GOPATH/src/github.com/ldln/landline-basestation/app/tmp
 # chown -R vagrant $GOPATH/*
