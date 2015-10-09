@@ -1,8 +1,8 @@
 # vagrant-dev
 
-Vagrant config and bootstrap files for setting up a virtual LDLN development environment
+Vagrant config and bootstrap files for setting up a virtual LDLN development environment.
 
-##What does it do?
+##What Does It Do?
 
 _TODO_
 
