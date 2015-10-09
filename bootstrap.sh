@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 
-# GET MONGO 
+# GET MONGO SOURCES
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
 
+# GET NODE SOURCES
+sudo apt-get install -y curl
+/usr/bin/curl -sL https://deb.nodesource.com/setup | sudo bash -
+
 # UPDATE UP
-apt-get update
-#apt-get upgrade -y
+sudo apt-get update
+#sudo apt-get upgrade -y
 sudo apt-get install -y gcc libc6-dev git mercurial bzr mongodb-org
 
 # POPULATE SAMPLE DATA
@@ -16,7 +20,6 @@ echo 'db.Schemas.insert({ "object_key" : "missing_person", "object_label" : "Mis
 echo 'db.Schemas.insert({ "object_key" : "inventory", "object_label" : "Inventory", "weight" : 1, "schema" : [ { "label" : "Name", "type" : "text", "weight" : 1 }, { "label" : "Quantity", "type" : "number", "weight" : 2 } ] })' >> /home/vagrant/ldlnDB.js
 echo 'db.Schemas.insert({ "object_key" : "wiki_page", "object_label" : "Wiki Page", "weight" : 1, "schema" : [ { "label" : "Title", "type" : "text", "weight" : 1 }, { "label" : "Synopsis", "type" : "longtext", "weight" : 2 }, { "label" : "Body", "type" : "richtext", "weight" : 2 } ] })' >> /home/vagrant/ldlnDB.js
 echo 'db.Schemas.insert({ "object_key" : "poi", "object_label" : "Point of Interest", "weight" : 1, "schema" : [ { "key" : "title", "label" : "Title", "type" : "text", "weight" : 1, "required" : true, "default" : "Enter title" }, { "key" : "note", "label" : "Note", "type" : "longtext", "weight" : 1, "required" : false, "default" : "" }, { "key" : "image", "label" : "Image", "type" : "image", "weight" : 1, "required" : false, "default" : "" }, { "key" : "map_location", "label" : "Map Location", "type" : "map_location", "weight" : 1, "required" : false, "default" : "" }, { "key" : "current_location", "label" : "Current Location", "type" : "current_location", "weight" : 1, "required" : false, "default" : "" }, { "key" : "pin_color", "label" : "Pin Color", "type" : "color", "weight" : 1, "required" : false, "default" : "" } ] })' >> /home/vagrant/ldlnDB.js
-/usr/bin/mongo < /home/vagrant/ldlnDB.js
 
 # INSTALL GO
 #if [ ! -d "/usr/local/go" ]; then
@@ -30,6 +33,8 @@ echo 'db.Schemas.insert({ "object_key" : "poi", "object_label" : "Point of Inter
     echo export PATH=\$PATH:/usr/local/go/bin >> .profile
     echo export GOPATH=\$HOME/go >> .profile
     echo export PATH=\$PATH:$GOPATH/bin >> .profile
+    
+    rm go$VERSION.$OS-$ARCH.tar.gz
 #fi
 
 # GET DEPENDENCIES
@@ -54,9 +59,29 @@ ln -s /home/vagrant/ldln-workspace $GOPATH/src/github.com/ldln
 /usr/local/go/bin/go get github.com/ldln/websocket-client
 /usr/local/go/bin/go get github.com/ldln/serial-server
 
+# BUILD REVEL APPS
+$GOPATH/bin/revel build github.com/ldln/web-app $GOPATH/bin/web-app
+
 # MAKE VAGRANT THE OWNER
 chown -R vagrant $GOPATH/*
 chown -R vagrant /home/vagrant/ldln-workspace
+
+# POPULATE SAMPLE DATA
+/usr/bin/mongo < /home/vagrant/ldlnDB.js
+
+# INSTALL TILESTREAM
+sudo apt-get install -y nodejs
+cd /home/vagrant
+/usr/bin/npm install sqlite3
+/usr/bin/git clone https://github.com/mapbox/tilestream.git /home/vagrant/tilestream
+cd /home/vagrant/tilestream
+/usr/bin/npm install
+cd ..
+mkdir /home/vagrant/ldln-workspace/mbtiles
+
+# MAKE VAGRANT THE OWNER
+chown -R vagrant /home/vagrant/node_modules
+chown -R vagrant /home/vagrant/tilestream
 
 # SETUP STARTUP FILE
 # #if [ ! -f "/etc/init.d/ldln.sh" ]; then
@@ -80,7 +105,7 @@ chown -R vagrant /home/vagrant/ldln-workspace
 #     echo "/usr/local/go/bin/go run /home/vagrant/go/src/github.com/ldln/landline-basestation/serial/main.go &" >> /etc/init.d/ldln.sh
 
 #     # start tilestream
-#     #/usr/bin/node /home/ubuntu/tilestream/index.js start --host 184.73.255.76 --tiles=/home/ubuntu/tilestream/tiles &
+#     echo "/usr/bin/node /home/vagrant/tilestream/index.js start --tiles=/home/vagrant/ldln-workspace/mbtiles &" >> /etc/init.d/ldln.sh
     
 #     chmod +x /etc/init.d/ldln.sh
 #     update-rc.d ldln.sh defaults
