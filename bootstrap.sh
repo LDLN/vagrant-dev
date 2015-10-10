@@ -33,7 +33,7 @@ echo 'db.Schemas.insert({ "object_key" : "poi", "object_label" : "Point of Inter
     echo export PATH=\$PATH:/usr/local/go/bin >> .profile
     echo export GOPATH=\$HOME/go >> .profile
     echo export PATH=\$PATH:$GOPATH/bin >> .profile
-    
+
     rm go$VERSION.$OS-$ARCH.tar.gz
 #fi
 
@@ -86,29 +86,31 @@ chown -R vagrant /home/vagrant/tilestream
 # SETUP STARTUP FILE
 # #if [ ! -f "/etc/init.d/ldln.sh" ]; then
 
-#     echo "#!/bin/sh" >> /etc/init.d/ldln.sh
-#     echo "### BEGIN INIT INFO" >> /etc/init.d/ldln.sh
-#     echo "# Provides:          god" >> /etc/init.d/ldln.sh
-#     echo "# Required-Start:    \$remote_fs $syslog" >> /etc/init.d/ldln.sh
-#     echo "# Required-Stop:     \$remote_fs $syslog " >> /etc/init.d/ldln.sh
-#     echo "# Default-Start:     2 3 4 5" >> /etc/init.d/ldln.sh
-#     echo "# Default-Stop:      0 1 6" >> /etc/init.d/ldln.sh
-#     echo "# Short-Description: start god process monitoring" >> /etc/init.d/ldln.sh
-#     echo "# Description:       Start god process monitoring" >> /etc/init.d/ldln.sh
-#     echo "### END INIT INFO" >> /etc/init.d/ldln.sh
-    
-#     echo "/bin/fuser -k 9000/tcp" >> /etc/init.d/ldln.sh
-#     echo "/bin/fuser -k 8080/tcp" >> /etc/init.d/ldln.sh
-#     echo "export GOPATH=/home/vagrant/go" >> /etc/init.d/ldln.sh
-#     echo "/home/vagrant/go/bin/revel run github.com/ldln/landline-basestation &" >> /etc/init.d/ldln.sh
-#     echo "/usr/local/go/bin/go run /home/vagrant/go/src/github.com/ldln/landline-basestation/ws/main.go &" >> /etc/init.d/ldln.sh
-#     echo "/usr/local/go/bin/go run /home/vagrant/go/src/github.com/ldln/landline-basestation/serial/main.go &" >> /etc/init.d/ldln.sh
+     echo "#!/bin/sh" >> /etc/init.d/ldln.sh
+     echo "### BEGIN INIT INFO" >> /etc/init.d/ldln.sh
+     echo "# Provides:          god" >> /etc/init.d/ldln.sh
+     echo "# Required-Start:    \$remote_fs $syslog" >> /etc/init.d/ldln.sh
+     echo "# Required-Stop:     \$remote_fs $syslog " >> /etc/init.d/ldln.sh
+     echo "# Default-Start:     2 3 4 5" >> /etc/init.d/ldln.sh
+     echo "# Default-Stop:      0 1 6" >> /etc/init.d/ldln.sh
+     echo "# Short-Description: start god process monitoring" >> /etc/init.d/ldln.sh
+     echo "# Description:       Start god process monitoring" >> /etc/init.d/ldln.sh
+     echo "### END INIT INFO" >> /etc/init.d/ldln.sh
+   
+     echo "/bin/fuser -k 9000/tcp" >> /etc/init.d/ldln.sh
+     echo "/bin/fuser -k 8080/tcp" >> /etc/init.d/ldln.sh
 
-#     # start tilestream
-#     echo "/usr/bin/node /home/vagrant/tilestream/index.js start --tiles=/home/vagrant/ldln-workspace/mbtiles &" >> /etc/init.d/ldln.sh
-    
-#     chmod +x /etc/init.d/ldln.sh
-#     update-rc.d ldln.sh defaults
+     echo "export GOPATH=/home/vagrant/go" >> /etc/init.d/ldln.sh
+     echo "/home/vagrant/go/bin/revel run github.com/ldln/web-app &" >> /etc/init.d/ldln.sh
+     echo "/usr/local/go/bin/go run /home/vagrant/go/src/github.com/ldln/websocket-server/main.go &" >> /etc/init.d/ldln.sh
+     echo "/usr/local/go/bin/go run /home/vagrant/go/src/github.com/ldln/websocket-client/main.go &" >> /etc/init.d/ldln.sh
+     echo "/usr/local/go/bin/go run /home/vagrant/go/src/github.com/ldln/serial-server/main.go &" >> /etc/init.d/ldln.sh
+
+     # start tilestream
+     echo "/usr/bin/node /home/vagrant/tilestream/index.js start --tiles=/home/vagrant/ldln-workspace/mbtiles &" >> /etc/init.d/ldln.sh
+   
+     chmod +x /etc/init.d/ldln.sh
+     update-rc.d ldln.sh defaults
 # #fi
 
-# /etc/init.d/ldln.sh
+ /etc/init.d/ldln.sh
