@@ -10,3 +10,7 @@ _TODO_
 
 Good resource on developing on serial ports with Vagrant:
 http://yagamy.logdown.com/posts/138888-serialport-programming-on-platform-virtual-machines
+
+<hr />
+
+Stuck on something? Check [the wiki](https://github.com/LDLN/core/wiki)!
