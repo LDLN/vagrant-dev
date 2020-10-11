@@ -18,15 +18,20 @@ Note that in the steps below [Local] indicates commands to be run on the develop
 
 ### Start the LDLN services (if needed for troubleshooting)
 6. [Local] `vagrant ssh` (or `ssh vagrant@localhost -p 2222` with the [default password](https://www.vagrantup.com/docs/boxes/base#vagrant-user) of `vagrant`)
-7. [VM] export PATH=$PATH:/usr/local/go/bin >> ~/.bashrc
-8. [VM] source ~/.bashrc
-9. [VM] /etc/init.d/ldln_dev_startup.sh
+7. [VM] `sudo /etc/init.d/ldln_dev_startup.sh`
 
-### 
+### Open your development environment (all [Local])
+
+8. `open -a "Visual Studio Code" ./` – the vagrant config stuff will be in the top level directory, and all LDLN modules can be found in the `ldln-workspace` directory, which is mapped to a VM directory (i.e. updates in the local IDE will be reflected in the VM)
+
+### Remove vm and filesystem (i.e. nuclear option if troubleshooting not going well – all [Local])
+1. vagrant destroy
+2. rm -Rf ldln-basestation
+3. rm -Rf .vagrant
 
 ## What Does It Do?
 
-_TODO_
+If all goes well, it should run all services necessary to simulate a deployment of a single LDLN Basestation. The [web-app](https://github.com/LDLN/web-app) interface is exposed via http://localhost:9000 and the websocket interface is exposed via ws://localhost:8080/ws
 
 ## Serial Ports
 
